@@ -19,10 +19,8 @@ jobs:
     - name: Checkout master branch
       uses: actions/checkout@v4
     - name: Change to root directory
-      run: |
-            cd ${{ github.workspace }}
-            cd 2024/labs-2024-09-30/linked_list
-    - name: build linked_list
-      run: gcc -Wall -Wextra -std=c99 main.c
-    - name: run linked_list
-      run: ./a.out jj kk ll
+      run: cd ${{ github.workspace }}
+    - name: build le_be_system
+      run: gcc -Wall -Wextra -std=c99 ./2024/labs-2024-09-30/le_be_system/main.c
+    - name: run le_be_system
+      run: ./2024/labs-2024-09-30/le_be_system/a.out
