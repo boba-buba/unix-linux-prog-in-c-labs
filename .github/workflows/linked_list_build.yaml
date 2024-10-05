@@ -20,7 +20,7 @@ jobs:
       uses: actions/checkout@v4
     - name: Change to root directory
       run: |
-            cd /2024/labs-2024-09-30/linked_list
+            cd 2024/labs-2024-09-30/linked_list
     - name: build linked_list
       run: gcc -Wall -Wextra -std=c99 main.c
     - name: run linked_list
