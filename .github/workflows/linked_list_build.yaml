@@ -18,10 +18,11 @@ jobs:
     steps:
     - name: Checkout master branch
       uses: actions/checkout@v4
-
     - name: build linked_list
       run: |
             cd 2024/labs-2024-09-30/linked_list
             gcc -Wall -Wextra -std=c99 main.c
     - name: run linked_list
-      run: ./a.out jj kk ll
+      run: |
+            cd 2024/labs-2024-09-30/linked_list
+            ./a.out jj kk ll
