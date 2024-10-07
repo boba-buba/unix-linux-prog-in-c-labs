@@ -1,18 +1,25 @@
 # Linker and libraries
 
-- write two dynamic libraries, `liba` and `libb`, and a program `main.c`
+## minimal linker options for trivial program
+
+Write a trivial program (where e.g. `main()` calls `printf()` and exits) and run the compiler with the `-###` option
+to see the linker options used to build the binary. Compile the program using the `-c` compiler option
+and `ld`, using the options from the `-###` run. Try to reduce the set of linker options to minimum (so that the program still runs).
+
+## runtime path vs. library search path
+
+- write two dynamic libraries, `liba.so` and `libb.so`, and a program `prog` (compiled from `main.c`)
 - `liba` will define a function `fna` which calls a function `fnb`
 - function `fnb` will be defined in `libb`
 - design `fna` and `fnb` as you wish just make sure they return something based
   on `argv[1]`, and print that argument out from `main` at the beginning
 - `main()` from `main.c` only calls function `fna`
-- make sure you can call the program from a local directory as `./a.out`, and
+- make sure you can call the program from a local directory as `./prog`, and
   also from the `/` directory using a full path.
 
 # Makefile
 - write a makefile for the previous task
 - use `touch(1)` to verify you only rebuild what is necessary and nothing else
-  - the `-n` (no-op) option of `make` is useful for this
 
 # libmin, libmax and makefiles
 
@@ -28,19 +35,19 @@ int min(int a[], ssize_t len); // return minimum value
 ```
 - the library source will comprise of the following two files:
   - `libmin.h`
-  - `libmin.c` - will include `libmin.h` (handy for interface checking)
-- the program will be in `main.c`, compiled into `prog` binary and will be
+  - `libmin.c` - will include libmin.h
+- the program will be in `main.c`, compiled into `main` binary and will be
   dynamically linked against `libmin.so`
 - `main.c` assumes valid numbers as its command line arguments
 - create a numbered array in `main()` (see the prototype above), fill it with
   numbers from the arguments.  Remember, you need to convert the string
   arguments to numbers.
-- call `min()` and print its result to stdout
+- call min() and print its result to stdout
 - now, how do you tell:
   - `libmin.so` is a dynamic library
   - `libmin.so` defines the `min` function (rather than taking it from
     elsewhere)
-  - `prog` is linked against `libmin.so`
+  - `main` is linked against `libmin.so`
 
 ## Construct a Makefile for the above
 
@@ -56,11 +63,10 @@ int min(int a[], ssize_t len); // return minimum value
 
 similarly to `libmin`, i.e. `libmax.[ch]`, `libmax.so`, ...
 
-- and link `prog` with both libraries
+- and link main with both libraries
 - 1st argument of your command will be now `min` or `max` string and based on
   that a given function will be chosen (and therefore the specific library will
   be used)
-  - or better yet, create symlinks or hardlinks named `min` and `max`, both pointing to the `prog`, and switch the behavior of the program based on the program name
 
 - use hierarchical build:
 ```
@@ -77,4 +83,3 @@ libmax/
     level `Makefile`, run e.g. `cd libmin; make` as the command to refresh the
     (empty) target.  Do not put dependencies from subdirectories into the top
     level `Makefile`.
-  - bonus task: figure out how to run the "builds" in `libmin` and `libmax` in parallel and then once both are done, link `prog`
