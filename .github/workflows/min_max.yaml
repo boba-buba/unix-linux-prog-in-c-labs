@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    paths-ignore:
+    - README.md
+  schedule:
+  - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+    - name: Checkout master branch
+      uses: actions/checkout@v4
+    - name: build min_max
+      run: |
+            cd 2024/labs-2024-10-07/min_max
+            make
+    - name: run min_max
+      run: |
+            cd 2024/labs-2024-10-07/min_max/build
+            ./main min 1 2 3 4
+            ./main max 1 2 3 4

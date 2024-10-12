@@ -2,3 +2,4 @@
 **/.DS_store
 **/a.out
 __pycache__
+.vscode
