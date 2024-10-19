@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    paths-ignore:
+    - README.md
+  schedule:
+  - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+    - name: Checkout master branch
+      uses: actions/checkout@v4
+
+    - name: build xcross
+      run: |
+            cd 2024/labs-2024-10-14/xcross
+            gcc -Wall -Wextra -std=c99 main.c
+    - name: run xcross
+      run: |
+            cd 2024/labs-2024-10-14/xcross
+            ./a.out 10 out.txt
