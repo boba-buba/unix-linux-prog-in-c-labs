@@ -14,16 +14,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest] #, macos-latest]
+        os: [ubuntu-latest, macos-latest]
     steps:
     - name: Checkout master branch
       uses: actions/checkout@v4
-    - name: build min_max
+
+    - name: build find
       run: |
-            cd 2024/labs-2024-10-07/min_max
-            make
-    - name: run min_max
+            cd 2024/labs-2024-10-21/find
+            gcc -Wall -Wextra -std=c99 main.c -o main -lc
+    - name: run find
       run: |
-            cd 2024/labs-2024-10-07/min_max/build
-            ./main min 1 2 3 4
-            ./main max 1 2 3 4
+            cd 2024/labs-2024-10-21/find
+            ./main /etc -t d -n f
