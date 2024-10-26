@@ -15,7 +15,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <string.h>
-#include <linux/limits.h>
+#include <limits.h>
 #include <stdlib.h>
 
 static char get_type(const char* path)
